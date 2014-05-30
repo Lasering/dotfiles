@@ -5,7 +5,11 @@ ZSH=/home/simon/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="simon"
+if [ $USER = "simon" ]; then
+    ZSH_THEME="simon"
+else
+    ZSH_THEME="simon-root"
+fi
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
