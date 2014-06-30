@@ -14,25 +14,11 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     map j gj
     map k gk
 
-    " TODO: Uncomment these lines to enable clipboard-over-ssh with a headless
-    " server. Both ends must have xclip installed and X forwarding must be ON.
-    " Add 'ForwardX11 yes' to /etc/ssh/ssh_config to avoid having to type
-    " ssh -X so much.
-    "vmap "+y :!xclip -f -sel clip<CR>
-    "map "+p :r!xclip -o -sel clip<CR>
-
     " backspace and cursor keys wrap to previous/next line
     "set backspace=indent,eol,start whichwrap+=<,>,[,]
 
     " backspace in Visual mode deletes selection
     vnoremap <BS> d
-
-    " Alt-Space is System menu
-    if has("gui")
-      noremap <M-Space> :simalt ~<CR>
-      inoremap <M-Space> <C-O>:simalt ~<CR>
-      cnoremap <M-Space> <C-C>:simalt ~<CR>
-    endif
 
     " Make indenting and unindenting in visual mode retain the selection so
     " you don't have to re-select or type gv every time.
@@ -67,6 +53,12 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     imap <C-\> <Esc>:w<Cr>
     map <C-\> <Esc>:w<Cr>
 
+
+    " Smart home
+
+    noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
+    imap <silent> <Home> <C-O><Home>
+
     " TODO: something to make "+y and "+p easier
 
     set listchars=tab:>-,eol:$
@@ -74,8 +66,9 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     set tabstop=4
     set shiftwidth=4
     set autoindent
-    set expandtab
-    " Allow middle-click pasting of large texts in terminal
+    " set expandtab
+    set list
+	" Allow middle-click pasting of large texts in terminal
     set pastetoggle=<F5>
     " Clear paste mode when going back to normal mode
     au InsertLeave * set nopaste
@@ -98,10 +91,6 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     set nostartofline
     set smarttab
 
-    set nobackup
-    set nowb
-    set noswapfile
-
     " More intuitive selecting in visual mode
     set selection=exclusive
 
@@ -117,36 +106,6 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
     " Fix annoying surround.vim message
     vmap s S
-
-    " ----------------------- Diff Commands ---------------------------------
-    function! s:DiffWithSaved()
-      let filetype=&ft
-      diffthis
-      vnew | r # | normal! 1Gdd
-      diffthis
-      exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-    endfunction
-    com! DiffSaved call s:DiffWithSaved()
-
-    function! s:DiffWithCVSCheckedOut()
-      let filetype=&ft
-      diffthis
-      vnew | r !cvs up -pr BASE #
-      1,6d
-      diffthis
-      exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-    endfunction
-    com! DiffCVS call s:DiffWithCVSCheckedOut()
-
-    function! s:DiffWithSVNCheckedOut()
-      let filetype=&ft
-      diffthis
-      vnew | exe "%!svn cat " . expand("#:p:h")
-      diffthis
-      exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
-    endfunction
-    com! DiffSVN call s:DiffWithSVNCheckedOut()
-    " ----------------------- End Diff Commands ------------------------------
 
     " tab navigation like firefox
     nmap <C-S-tab> :tabprevious<CR>
@@ -180,10 +139,6 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     set printfont=courier:h8
     set printoptions+=duplex:long
 
-    " Make snipmate HTML snippets work in php and eruby files
-    au BufRead,BufNewFile *.php set filetype=php.html
-    au BufRead,BufNewFile *.erb set filetype=eruby.html
-
     set iskeyword +=-,_
 
     " Use unix line endings (LF) unless the file already has DOS line endings
@@ -200,54 +155,23 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     augroup END
 
     " Use strong encryption
-    set cm=blowfish
+    " set cm=blowfish
 
 " ================ VISUAL =================
-    colorscheme dw_cyan
     set background=dark
     syntax on
+    colorscheme jellybeans
+        
+    " Make spelling mistake highlighting easier on the eyes.
+    hi clear SpellBad
+    hi SpellBad cterm=underline ctermfg=red
+    hi clear SpellCap
+    hi SpellCap cterm=underline ctermfg=blue
+    hi clear SpellLocal
+    hi SpellLocal cterm=underline ctermfg=blue
+    hi clear SpellRare
+    hi SpellRare cterm=underline ctermfg=blue
 
-    " gnome-terminal really does support 256 colors, and jellybeans looks nice
-    "in 256 colors. The &t_Co==8 is a hack to detect gnome-terminal vs
-    "console2 (which does not support 256 color)
-    if !has("gui_running") && &t_Co==8
-        set t_Co=256
-        colorscheme jellybeans
-        " Make spelling mistake highlighting easier on the eyes.
-        hi clear SpellBad
-        hi SpellBad cterm=underline ctermfg=red
-        hi clear SpellCap
-        hi SpellCap cterm=underline ctermfg=blue
-        hi clear SpellLocal
-        hi SpellLocal cterm=underline ctermfg=blue
-        hi clear SpellRare
-        hi SpellRare cterm=underline ctermfg=blue
-    else
-        " dw_cyan modifications
-        hi CursorLine cterm=NONE ctermbg=black guibg=#101520
-        hi CursorColumn cterm=NONE ctermbg=black guibg=#101520
-        highlight Cursor guifg=black guibg=yellow
-        highlight iCursor guifg=black guibg=yellow
-        set guicursor+=a:blinkon0
-    end
-
-    if has("gui_running")
-        " Make statusline color depend on the current mode
-        " TODO: make visual/select mode dark green
-        function! InsertStatuslineColor(mode)
-        if a:mode == 'i'
-            hi statusline guibg=#005151 ctermbg=darkgray
-        elseif a:mode == 'r'
-            hi statusline guibg=#000071
-        else
-            hi statusline guibg=#710000
-        endif
-        endfunction
-
-        au InsertEnter * call InsertStatuslineColor(v:insertmode)
-        " Default status line color (the following two 'hi' should be the same)
-        au InsertLeave * hi StatusLine cterm=NONE ctermbg=NONE ctermfg=gray guibg=#202020 guifg=white
-    end
     hi StatusLine cterm=NONE ctermbg=NONE ctermfg=gray guibg=#202020 guifg=white
 
     " Highlight the line the cursor is on
@@ -268,9 +192,6 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
         set lines=32 columns=120
     endif
 
-    " Use forward slashes in windows
-    set shellslash
-
     " No annoying flashes
     set novb
 
@@ -280,9 +201,9 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
     set mouse=nicr
 
     "Hide the toolbar
-    set guioptions-=T
+    "set guioptions-=T
     " Hide the menu bar
-    set guioptions-=m
+    "set guioptions-=m
     " Scroll bars are for noobs
     set guioptions-=r
     set guioptions-=l
