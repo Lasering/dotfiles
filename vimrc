@@ -148,7 +148,7 @@ augroup END
 " Use strong encryption
 " set cm=blowfish
 
-============== VISUAL =================
+" ============== VISUAL =================
 set background=dark
 syntax on
 colorscheme jellybeans
