@@ -55,6 +55,7 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 #ALIASES
+alias t='tree'
 alias grep='grep --color=auto'
 alias l='ls -lh'
 alias la='l -A'
