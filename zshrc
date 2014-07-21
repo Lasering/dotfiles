@@ -55,7 +55,7 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 #ALIASES
-alias t='tree'
+alias t='tree -C'
 alias grep='grep --color=auto'
 alias l='ls -lh'
 alias la='l -A'
@@ -63,4 +63,5 @@ alias hd='hexdump -C'
 
 if [ $USER = "root" ]; then
 	alias vim='vim -u ~simon/.vimrc'
+	export PATH='`echo $PATH`'
 fi

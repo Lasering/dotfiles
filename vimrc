@@ -75,7 +75,7 @@
 	set list
 	set listchars=tab:>-,eol:$
 	
-	" Allow middle-click pasting of large texts in terminal
+	" Makes F5 toggle paste mode.
 	set pastetoggle=<F5>
 	" Clear paste mode when going back to normal mode
 	au InsertLeave * set nopaste
