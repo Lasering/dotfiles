@@ -1,9 +1,13 @@
-" ====== AUTOCOMPLETE ==============
+" ==========================================================================================================================
+" ====== AUTOCOMPLETE ======================================================================================================
+" ==========================================================================================================================
 	autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 	autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 
-" ====== FUNCTIONALITY =============
+" ==========================================================================================================================
+" ====== KEYBINDINGS =======================================================================================================
+" ==========================================================================================================================
 	set nocompatible
 	
 	" Make j,k move by screen lines instead of file lines.
@@ -53,7 +57,7 @@
 	imap <C-\> <Esc>:w<Cr>
 	map <C-\> <Esc>:w<Cr>
 	
-	" Easy exit from any mode. NOTE: if the file was modified the changes will NOT be saved
+	" Easy exit from any mode. NOTE: if the file was modified the changes will NOT be saved.
 	imap <C-q> <Esc>:q!<Cr>
 	map <C-q> <Esc>:q!<Cr>
 	
@@ -61,77 +65,7 @@
 	noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 	imap <silent> <Home> <C-O><Home>
 	
-	set foldmethod=marker
-	
-	" A tab will ocupy the size of 4 spaces
-	set tabstop=4
-	
-	set shiftwidth=4
-	set shiftround
-	
-	" Copy indent from current line when starting a new line 
-	set autoindent
-	" List tab (with >-) and end of line (with $) characthers
-	set list
-	set listchars=tab:>-,eol:$
-	
-	" Makes F5 toggle paste mode.
-	set pastetoggle=<F5>
-	" Clear paste mode when going back to normal mode
-	au InsertLeave * set nopaste
-	
-	set nowrap
-	
-	"set sidescrolloff=20
-	"set wrap linebreak textwidth=0
-	
-	" Automatic indentation based on file type
-	filetype indent on
-	filetype plugin on
-	
-	" Allows backspacing over autoident, over line breaks (join lines)
-	" and over the start of the line
-	set backspace=indent,eol,start
-	
-	" Remembers the last 1000 search patterns
-	set history=1000
-	
-	" First tab completes as much as possible and shows the list if there is
-	" more than one matching item. Next tabs iterate through the list.
-	set wildmode=list:longest,full
-	set wildmenu
-	
-	" While typing a search command, show where the pattern, as it was typed
-	" so far, matches.  The matched string is highlighted.
-	set incsearch
-	
-	"set hidden
-	
-	" A new vsplited window will appear to the right of the current one
-	set splitright
-	" A new splited window will apperar bellow the current one.
-	set splitbelow
-	
-	set nostartofline
-	set smarttab
-	
-	" More intuitive selecting in visual mode
-	set selection=exclusive
-	
-	" Double slash -> Case insensitive search
-	map // /\c
-	map ?? ?\c
-	
-	" Easy access to NERDTree
-	if(!exists('vimrc_already_sourced'))
-	    command Nt NERDTree
-	    command Nc NERDTreeClose
-	endif
-	
-	" Fix annoying surround.vim message
-	vmap s S
-	
-	" tab navigation like firefox
+	" Tab navigation like firefox
 	nmap <C-S-tab> :tabprevious<CR>
 	nmap <C-tab> :tabnext<CR>
 	map <C-S-tab> :tabprevious<CR>
@@ -146,39 +80,88 @@
 	smap <Tab> <Esc>:'<,'> > <CR>
 	vmap <Tab> <Esc>:'<,'> > <CR>gv
 	
-	set formatoptions+=l
-	"set lbr
+" ==========================================================================================================================
+" ====== FUNCTIONALITY =====================================================================================================
+" ==========================================================================================================================
+	set foldmethod=syntax
 	
-	"Indicates a fast terminal connection.  More characters will be sent to
-	"the screen for redrawing, instead of using insert/delete line commands.
-	set ttyfast
+	" A tab will ocupy the size of 4 spaces
+	set tabstop=4
+	" Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
+	set shiftwidth=4
+	" Round indent to multiple of 'shiftwidth'.  Applies to > and < commands.
+	set shiftround
+	" When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
+	" 'tabstop' or 'softtabstop' is used in other places.  A <BS> will delete
+	" a 'shiftwidth' worth of space at the start of the line.
+	set smarttab
 	
-	" ---- PRINTING ----
-	set popt=left:1in,right:1in,top:1in,bottom:1in,header:2,syntax:a,paper:letter
-	" On PostScript systems, Vim ignores the font but NOT the size.
-	" So this will make us print in 8-pt (but not necessarily courier)
-	set printfont=courier:h8
-	set printoptions+=duplex:long
+	" Copy indent from current line when starting a new line
+	set autoindent
 	
-	set iskeyword +=-,_
+	" List tab (with >-) and end of line (with $) characthers
+	set list
+	set listchars=tab:>-,eol:$
+	
+	" Makes F5 toggle paste mode
+	set pastetoggle=<F5>
+	" Clear paste mode when going back to normal mode
+	au InsertLeave * set nopaste
+	
+	set nowrap
+	
+	" Automatic indentation based on file type
+	filetype indent on
+	filetype plugin on
+	
+	" Allows backspacing over autoident, over line breaks (join lines)
+	" and over the start of the line
+	set backspace=indent,eol,start
+	
+	" Remembers the last 1000 search patterns
+	set history=1000
+	
+	" First tab completes as much as possible and shows the list if there is
+	" more than one matching item. Next tabs iterate through the list.
+	set wildmenu
+	set wildmode=list:longest,full
+	
+	" While typing a search command, show where the pattern, as it was typed
+	" so far, matches. The matched string is highlighted.
+	set incsearch
+	
+	" A new vsplited window will appear to the right of the current one
+	set splitright
+	" A new splited window will apperar bellow the current one.
+	set splitbelow
+	
+	" When "on" the commands listed below move the cursor to the first non-blank of the line.
+	set startofline
+	
+	" More intuitive selecting in visual mode
+	set selection=exclusive
+	
+	" Easy access to NERDTree
+	if(!exists('vimrc_already_sourced'))
+	    command Nt NERDTree
+	    command Nc NERDTreeClose
+	endif
+	
+	" Fix annoying surround.vim message
+	vmap s S
 	
 	" Use unix line endings (LF) unless the file already has DOS line endings
 	set fileformats=unix,dos
 	" Set the initial buffer to unix line endings
 	set fileformat=unix
 	
-	" Don't comment the new line when pressing o or O on a commented line
-	" This block must come after the other filetype lines in this file.
-	set formatoptions -=o
-	augroup myft
-	  au!
-	  au FileType * setlocal formatoptions-=o
-	augroup END
+	"Indicates a fast terminal connection.  More characters will be sent to
+	"the screen for redrawing, instead of using insert/delete line commands.
+	set ttyfast
 	
-	" Use strong encryption
-	" set cm=blowfish
-	
-" ================ VISUAL =================
+" ==========================================================================================================================
+" ====== VISUAL ============================================================================================================
+" ==========================================================================================================================
 	set background=dark
 	syntax on
 	colorscheme jellybeans
@@ -205,7 +188,6 @@
 	" Always show the status line
 	set laststatus=2
 	" Status line content
-	"set statusline=%n:\ %F\ [%{&ff}]%y%m%h%w%r\ %=char=0x%B\ \ \ x=%v\ y=%l/%L\ -\ %p%%\ 
 	set statusline=%n:\ %F\ [%{&ff}]%y%m%h%w%r\ %=[char:\ 0x%B]\ \[column:\ %v]\ [line:\ %l\ of\ %L\ \(%p%%\)]\
 	
 	" Make the default window size bigger
@@ -241,12 +223,6 @@
 	" Show line numbers
 	set nu
 	
-	if has("unix")
-		set guifont=Monospace\ 8
-	else
-		set guifont=Lucida_Console:h10:cANSI
-	endif
-	
 	" $ for change command instead of deleting word then insert
 	set cpoptions+=$
 	
@@ -267,42 +243,42 @@
 	set showcmd
 	
 	" Spell checking
-	setglobal spell spelllang=en_gb
+	" setglobal spell spelllang=en_gb
 	
 	" Keep more context when editing PHP files so Vim doesn't try to highlight
 	" PHP as HTML and vice-versa.
-	let php_minlines=500
+	" let php_minlines=500
 	
 	" Rainbow parentheses colors.
 	" Left column is for terminal environment.
 	" Right column is for GUI environment.
 	" Outermost is determined by last.
-	let g:rbpt_colorpairs = [
-		\ ['blue',       '#FF6000'],
-		\ ['cyan', '#00FFFF'],
-		\ ['darkmagenta',    '#CC00FF'],
-		\ ['yellow',   '#FFFF00'],
-		\ ['red',     '#FF0000'],
-		\ ['darkgreen',    '#00FF00'],
-		\ ['White',         '#c0c0c0'],
-		\ ['blue',       '#FF6000'],
-		\ ['cyan', '#00FFFF'],
-		\ ['darkmagenta',    '#CC00FF'],
-		\ ['yellow',   '#FFFF00'],
-		\ ['red',     '#FF0000'],
-		\ ['darkgreen',    '#00FF00'],
-		\ ['White',         '#c0c0c0'],
-		\ ['blue',       '#FF6000'],
-		\ ['cyan', '#00FFFF'],
-		\ ['darkmagenta',    '#CC00FF'],
-		\ ['yellow',   '#FFFF00'],
-		\ ['red',     '#FF0000'],
-		\ ['darkgreen',    '#00FF00'],
-		\ ['White',         '#c0c0c0'],
-		\ ]
+	"let g:rbpt_colorpairs = [
+	"	\ ['blue',       '#FF6000'],
+	"	\ ['cyan', '#00FFFF'],
+	"	\ ['darkmagenta',    '#CC00FF'],
+	"	\ ['yellow',   '#FFFF00'],
+	"	\ ['red',     '#FF0000'],
+	"	\ ['darkgreen',    '#00FF00'],
+	"	\ ['White',         '#c0c0c0'],
+	"	\ ['blue',       '#FF6000'],
+	"	\ ['cyan', '#00FFFF'],
+	"	\ ['darkmagenta',    '#CC00FF'],
+	"	\ ['yellow',   '#FFFF00'],
+	"	\ ['red',     '#FF0000'],
+	"	\ ['darkgreen',    '#00FF00'],
+	"	\ ['White',         '#c0c0c0'],
+	"	\ ['blue',       '#FF6000'],
+	"	\ ['cyan', '#00FFFF'],
+	"	\ ['darkmagenta',    '#CC00FF'],
+	"	\ ['yellow',   '#FFFF00'],
+	"	\ ['red',     '#FF0000'],
+	"	\ ['darkgreen',    '#00FF00'],
+	"	\ ['White',         '#c0c0c0'],
+	"	\ ]
 	
 	" Update this with the amount of supported colors
-	let g:rbpt_max = 21
+	" let g:rbpt_max = 21
 	
 	" Turn rainbow parenthesis script on
 	"au VimEnter * RainbowParenthesesToggle
