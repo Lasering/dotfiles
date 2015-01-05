@@ -83,7 +83,7 @@
 " ==========================================================================================================================
 " ====== FUNCTIONALITY =====================================================================================================
 " ==========================================================================================================================
-	set foldmethod=syntax
+	set foldmethod=indent
 	
 	" A tab will ocupy the size of 4 spaces
 	set tabstop=4
@@ -95,6 +95,8 @@
 	" 'tabstop' or 'softtabstop' is used in other places.  A <BS> will delete
 	" a 'shiftwidth' worth of space at the start of the line.
 	set smarttab
+	
+	set smartindent
 	
 	" Copy indent from current line when starting a new line
 	set autoindent
