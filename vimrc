@@ -190,7 +190,7 @@
 	" Always show the status line
 	set laststatus=2
 	" Status line content
-	set statusline=%n:\ %F\ [%{&ff}]%y%m%h%w%r\ %=[char:\ 0x%B]\ \[column:\ %v]\ [line:\ %l\ of\ %L\ \(%p%%\)]\
+	set statusline=%F\ [%{strlen(&fenc)?&fenc:'none'}][%{&ff}]%y%m%h%w%r%=[column:\ %v][line:\ %l\ of\ %L\ (%p%%)]"
 	
 	" Make the default window size bigger
 	if has("gui_running") && !exists('vimrc_already_sourced')
