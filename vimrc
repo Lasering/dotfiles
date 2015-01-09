@@ -4,7 +4,7 @@
 	autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 	autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-
+	
 " ==========================================================================================================================
 " ====== KEYBINDINGS =======================================================================================================
 " ==========================================================================================================================
@@ -83,6 +83,7 @@
 " ==========================================================================================================================
 " ====== FUNCTIONALITY =====================================================================================================
 " ==========================================================================================================================
+	" Froups of lines with the same indent form a fold
 	set foldmethod=indent
 	
 	" A tab will ocupy the size of 4 spaces
@@ -96,7 +97,7 @@
 	" a 'shiftwidth' worth of space at the start of the line.
 	set smarttab
 	
-	set smartindent
+	"set smartindent
 	
 	" Copy indent from current line when starting a new line
 	set autoindent
@@ -108,7 +109,7 @@
 	" Makes F5 toggle paste mode
 	set pastetoggle=<F5>
 	" Clear paste mode when going back to normal mode
-	au InsertLeave * set nopaste
+	autocmd InsertLeave * set nopaste
 	
 	set nowrap
 	
@@ -168,17 +169,31 @@
 	syntax on
 	colorscheme jellybeans
 	
-	" Make spelling mistake highlighting easier on the eyes.
-	hi clear SpellBad
-	hi SpellBad cterm=underline ctermfg=red
-	hi clear SpellCap
-	hi SpellCap cterm=underline ctermfg=blue
-	hi clear SpellLocal
-	hi SpellLocal cterm=underline ctermfg=blue
-	hi clear SpellRare
-	hi SpellRare cterm=underline ctermfg=blue
+	" Spell checking
+	" setglobal spell spelllang=en_gb
 	
-	hi StatusLine cterm=NONE ctermbg=NONE ctermfg=gray guibg=#202020 guifg=white
+	" Highlight search terms
+	set hlsearch
+	
+	" Make spelling mistake highlighting easier on the eyes.
+	" SpellBad = words that are not recognized by the spellchecker
+	highlight clear SpellBad
+	highlight SpellBad cterm=underline ctermfg=red
+	" SpellCap = words that should start with a capital
+	highlight clear SpellCap
+	highlight SpellCap cterm=underline ctermfg=blue
+	" SpellLocal = words that are recognized by the spellchecker as words that are used in another region
+	highlight clear SpellLocal
+	highlight SpellLocal cterm=underline ctermfg=blue
+	" SpellRare = words that are recognized by the spellchecker as words that are hardly ever used
+	highlight clear SpellRare
+	highlight SpellRare cterm=underline ctermfg=blue
+	
+	" Always show the status line
+	set laststatus=2
+	" Status line content
+	set statusline=%F\ [%{strlen(&fenc)?&fenc:'none'}][%{&ff}]%y%m%h%w%r%=[column:\ %v][line:\ %l\ of\ %L\ (%p%%)]"
+	highlight StatusLine cterm=NONE ctermbg=NONE ctermfg=gray guibg=#202020 guifg=white
 	
 	" Highlight the line the cursor is on
 	set cursorline
@@ -186,11 +201,6 @@
 	" Always show the last line on the screen, even when it's too long (gets
 	" rid of the annoying @@@@@ crap)
 	set display+=lastline
-	
-	" Always show the status line
-	set laststatus=2
-	" Status line content
-	set statusline=%F\ [%{strlen(&fenc)?&fenc:'none'}][%{&ff}]%y%m%h%w%r%=[column:\ %v][line:\ %l\ of\ %L\ (%p%%)]"
 	
 	" Make the default window size bigger
 	if has("gui_running") && !exists('vimrc_already_sourced')
@@ -203,7 +213,8 @@
 	" Fix GNOME disappearing mouse bug
 	set nomousehide
 	
-	set mouse=nicr
+	" The mouse is enabled for normal, insert and command-line modes.
+	set mouse=nic
 	
 	" Hides all scroll bars
 	set guioptions-=r,l,L
@@ -226,16 +237,13 @@
 	set nu
 	
 	" $ for change command instead of deleting word then insert
-	set cpoptions+=$
+	" set cpoptions+=$
 	
-	" Highlight search terms
-	set hlsearch
-	
-	" Skip the splash screen
+	" Don't show the intro message when starting Vim
 	set shortmess+=I
 	
 	" Don't update the display while executing macros
-	set lazyredraw
+	" set lazyredraw
 	
 	" When the page starts to scroll, keep the cursor 4 lines from the top and 8
 	" lines from the bottom
@@ -244,50 +252,8 @@
 	" Show the command as it's being typed in the lower right
 	set showcmd
 	
-	" Spell checking
-	" setglobal spell spelllang=en_gb
-	
 	" Keep more context when editing PHP files so Vim doesn't try to highlight
 	" PHP as HTML and vice-versa.
 	" let php_minlines=500
-	
-	" Rainbow parentheses colors.
-	" Left column is for terminal environment.
-	" Right column is for GUI environment.
-	" Outermost is determined by last.
-	"let g:rbpt_colorpairs = [
-	"	\ ['blue',       '#FF6000'],
-	"	\ ['cyan', '#00FFFF'],
-	"	\ ['darkmagenta',    '#CC00FF'],
-	"	\ ['yellow',   '#FFFF00'],
-	"	\ ['red',     '#FF0000'],
-	"	\ ['darkgreen',    '#00FF00'],
-	"	\ ['White',         '#c0c0c0'],
-	"	\ ['blue',       '#FF6000'],
-	"	\ ['cyan', '#00FFFF'],
-	"	\ ['darkmagenta',    '#CC00FF'],
-	"	\ ['yellow',   '#FFFF00'],
-	"	\ ['red',     '#FF0000'],
-	"	\ ['darkgreen',    '#00FF00'],
-	"	\ ['White',         '#c0c0c0'],
-	"	\ ['blue',       '#FF6000'],
-	"	\ ['cyan', '#00FFFF'],
-	"	\ ['darkmagenta',    '#CC00FF'],
-	"	\ ['yellow',   '#FFFF00'],
-	"	\ ['red',     '#FF0000'],
-	"	\ ['darkgreen',    '#00FF00'],
-	"	\ ['White',         '#c0c0c0'],
-	"	\ ]
-	
-	" Update this with the amount of supported colors
-	" let g:rbpt_max = 21
-	
-	" Turn rainbow parenthesis script on
-	"au VimEnter * RainbowParenthesesToggle
-	" These are necessary to re-load the stuff when syntax changes.
-	"au Syntax * RainbowParenthesesLoadRound
-	" I don't anything but ( and ) colored, so don't bother loading these
-	"au Syntax * RainbowParenthesesLoadSquare
-	"au Syntax * RainbowParenthesesLoadBraces
 	
 	let vimrc_already_sourced = 1
