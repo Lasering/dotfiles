@@ -52,7 +52,18 @@ source $ZSH/oh-my-zsh.sh
 #export PATH=$HOME/bin:/usr/local/bin:~/.gem/ruby/2.1.0/gems/chef-11.12.4/bin/:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
+export TERM='xterm-256color'
 export EDITOR='vim'
+
+#KEYS BINDINGS
+bindkey '^[[H'      beginning-of-line       #Home
+bindkey '^[[F'      end-of-line             #End
+bindkey '^[[2~'     overwrite-mode          #Insert
+bindkey '^[[3~'     delete-char             #Delete
+bindkey '^[[3;5~'   kill-word               #Ctrl+Delete
+bindkey '^[[33~'    backward-kill-word      #Ctrl+Backspace
+bindkey '^[[1;5D'   backward-word           #Ctrl+Left Arrow
+bindkey '^[[1;5C'   forward-word            #Ctrl+Right Arrow
 
 #ALIASES
 alias t='tree -C'
