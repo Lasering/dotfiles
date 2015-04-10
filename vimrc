@@ -172,6 +172,9 @@
 	" Spell checking
 	" setglobal spell spelllang=en_gb
 	
+	" Does not highlight the screen line. Makes vim fast when the opened file has long lines
+	set nocursorline
+	
 	" Highlight search terms
 	set hlsearch
 	
