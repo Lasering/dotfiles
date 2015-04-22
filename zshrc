@@ -47,13 +47,10 @@ plugins=(git scala sbt svn systemd)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-#export PATH=$HOME/bin:/usr/local/bin:~/.gem/ruby/2.1.0/gems/chef-11.12.4/bin/:$PATH
-# export MANPATH="/usr/local/man:$MANPATH"
-
 export TERM='xterm-256color'
 export EDITOR='vim'
+
+tabs 4
 
 #KEYS BINDINGS
 bindkey '^[[H'      beginning-of-line       #Home
