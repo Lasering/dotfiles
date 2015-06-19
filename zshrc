@@ -71,4 +71,5 @@ alias hd='hexdump -C'
 
 if [ $USER = "root" ]; then
 	alias vim='vim -u ~simon/.vimrc'
+	alias vimdiff='vimdiff -u ~simon/.vimrc'
 fi
