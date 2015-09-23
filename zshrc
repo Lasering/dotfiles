@@ -67,6 +67,9 @@ alias t='tree -C'
 alias grep='grep --color=auto'
 alias l='ls -lh'
 alias la='l -A'
+alias lx='l --sort=extension' # aka l -X
+alias lt='l --sort=time -r' # aka l -t  -r = reverse order while sorting
+
 alias hd='hexdump -C'
 
 if [ $USER = "root" ]; then

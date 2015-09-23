@@ -93,6 +93,9 @@ endif
 	" Froups of lines with the same indent form a fold
 	set foldmethod=indent
 	
+	" Starts editing with all folds closed
+	set foldlevelstart=0
+	
 	" A tab will ocupy the size of 4 spaces
 	set tabstop=4
 	" Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
@@ -104,7 +107,8 @@ endif
 	" a 'shiftwidth' worth of space at the start of the line.
 	set smarttab
 	
-	"set smartindent
+	" Do smart autoindenting when starting a new line.
+	set smartindent
 	
 	" Copy indent from current line when starting a new line
 	set autoindent
@@ -224,7 +228,7 @@ endif
 	set nomousehide
 	
 	" The mouse is enabled for normal, insert and command-line modes.
-	set mouse=nic
+	set mouse=a
 	
 	" Hides all scroll bars
 	set guioptions-=r,l,L
