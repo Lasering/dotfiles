@@ -47,10 +47,9 @@ plugins=(git scala sbt svn systemd)
 
 source $ZSH/oh-my-zsh.sh
 
+tabs 4
 export TERM='xterm-256color'
 export EDITOR='vim'
-
-tabs 4
 
 #KEYS BINDINGS
 bindkey '^[[H'      beginning-of-line       #Home
