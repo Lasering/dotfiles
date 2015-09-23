@@ -64,7 +64,7 @@ bindkey '^[[1;5C'   forward-word            #Ctrl+Right Arrow
 #ALIASES
 alias t='tree -C'
 alias grep='grep --color=auto'
-alias l='ls -lh'
+alias l='ls -lh --time-style=long-iso'
 alias la='l -A'
 alias lx='l --sort=extension' # aka l -X
 alias lt='l --sort=time -r' # aka l -t  -r = reverse order while sorting
