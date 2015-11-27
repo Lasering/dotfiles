@@ -5,7 +5,7 @@
 
 cd ~simao;
 
-ln -sf dotfiles/zshrc .zshrc
-ln -sf dotfiles/vimrc .vimrc
-sudo ln -sf dotfiles/simon.zsh-theme /usr/share/oh-my-zsh/themes
-sudo ln -sf dotfiles/simon-root.zsh-theme /usr/share/oh-my-zsh/themes
+ln -sf ~simao/dotfiles/zshrc ~simao/.zshrc
+ln -sf ~simao/dotfiles/vimrc ~simao/.vimrc
+sudo ln -sf ~simao/dotfiles/simon.zsh-theme /usr/share/oh-my-zsh/themes
+sudo ln -sf ~simao/dotfiles/simon-root.zsh-theme /usr/share/oh-my-zsh/themes
