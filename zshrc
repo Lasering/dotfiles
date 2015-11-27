@@ -1,9 +1,9 @@
 # Path to your oh-my-zsh installation.
-ZSH=~simon/.oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-if [ $USER = "simon" ]; then
+if [ $USER = "simao" ]; then
     ZSH_THEME="simon"
 else
     ZSH_THEME="simon-root"
