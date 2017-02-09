@@ -3,28 +3,43 @@ if $USER == "root"
 endif
 
 " ==========================================================================================================================
-" ====== AUTOCOMPLETE ======================================================================================================
+" ====== PLUGINS ===========================================================================================================
 " ==========================================================================================================================
-	autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-	autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-	
+set nocompatible
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin('~/.vim/bundle')
+Plugin 'VundleVim/Vundle.vim'
+
+" Theme
+Plugin 'dodie/vim-monokai-refined'
+Plugin 'luochen1990/rainbow'
+
+" Nerdtree
+Plugin 'scrooloose/nerdtree'                 " <F2> to toggle tree, <F3> to find current file in tree
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'xuyuanp/nerdtree-git-plugin'
+
+" Git
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
+
+" Autocomplete
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/neocomplete.vim'
+
+" Languages
+Plugin 'derekwyatt/vim-scala'
+
+call vundle#end()
+filetype plugin indent on
+let g:rainbow_active = 1
+
 " ==========================================================================================================================
 " ====== KEYBINDINGS =======================================================================================================
 " ==========================================================================================================================
-	set nocompatible
-	
-	" Make j,k move by screen lines instead of file lines.
-	" WARNING: If you use this vimrc, make sure you understand the implications
-	" of the following two mappings, especially if you use macros frequently.
-	" A temporary workaround for writing macros is to go into insert mode, use
-	" the up/down arrow keys, then exit to normal mode.
-	map j gj
-	map k gk
-	
-	" backspace and cursor keys wrap to previous/next line
-	"set backspace=indent,eol,start whichwrap+=<,>,[,]
-	
 	" backspace in Visual mode deletes selection
 	vnoremap <BS> d
 	
@@ -33,35 +48,25 @@ endif
 	vnoremap > ><CR>gv
 	vnoremap < <<CR>gv
 	
-	" Make CTRL+u and CTRL+d less confusing
-	map <C-u> 10<C-Y>10k
-	map <C-d> 10<C-E>10j
-	" Scroll the /screen/ with ALT+{j,k}
-	map <A-j> 2<C-E>
-	map <A-k> 2<C-Y>
-	
 	" Switch windows quickly with CTRL+{h,j,k,l}
 	" This breaks backspace in a terminal, but I never use backspace in normal mode
-	map <C-h> <C-W>h
-	map <C-j> <C-W>j
-	map <C-k> <C-W>k
-	map <C-l> <C-W>l
-	" This would break in a terminal where ^H is backspace.
-	if has("gui_running")
-	    imap <C-h> <Esc><C-W>h
-	endif
-	imap <C-j> <Esc><C-W>j
-	imap <C-k> <Esc><C-W>k
-	imap <C-l> <Esc><C-W>l
-	
-	" Quickly switch between buffers with CTRL+b
-	map <C-b> :b#<Cr>
+	" map <C-h> <C-W>h
+	" map <C-j> <C-W>j
+	" map <C-k> <C-W>k
+	" map <C-l> <C-W>l
+	" " This would break in a terminal where ^H is backspace.
+	" if has("gui_running")
+	"     imap <C-h> <Esc><C-W>h
+	" endif
+	" imap <C-j> <Esc><C-W>j
+	" imap <C-k> <Esc><C-W>k
+	" imap <C-l> <Esc><C-W>l
 	
 	" Easy save from any mode
 	imap <C-\> <Esc>:w<Cr>
 	map <C-\> <Esc>:w<Cr>
 	
-	" Easy exit from any mode. NOTE: if the file was modified the changes will NOT be saved.
+	" Easy exit without saving from any mode.
 	imap <C-q> <Esc>:q!<Cr>
 	map <C-q> <Esc>:q!<Cr>
 	
@@ -69,23 +74,33 @@ endif
 	noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 	imap <silent> <Home> <C-O><Home>
 	
-	" Tab navigation like firefox
-	nmap <C-S-tab> :tabprevious<CR>
-	nmap <C-tab> :tabnext<CR>
+	" Tab navigation
 	map <C-S-tab> :tabprevious<CR>
+	nmap <C-S-tab> :tabprevious<CR>
+	imap <C-S-tab> <Esc>:tabprevious<CR>
+	
 	map <C-tab> :tabnext<CR>
-	imap <C-S-tab> <Esc>:tabprevious<CR>i
+	nmap <C-tab> :tabnext<CR>
 	imap <C-tab> <Esc>:tabnext<CR>i
-	"nmap <C-t> :tabnew<CR>
-	"imap <C-t> <Esc>:tabnew<CR>
+	
+	nmap <C-t> :tabnew<CR>
+	imap <C-t> <Esc>:tabnew<CR>
+	
+	nmap <C-w> :tabclose<CR>
+	imap <C-w> <Esc>:tabclose<CR>
 	
 	" TAB on select indents:
 	" Note: Using > and < is a lot easier!
 	smap <Tab> <Esc>:'<,'> > <CR>
 	vmap <Tab> <Esc>:'<,'> > <CR>gv
 	
+	" Makes F5 toggle paste mode
+	set pastetoggle=<F5>
+	" Clear paste mode when going back to normal mode
+	autocmd InsertLeave * set nopaste
+	
 	" Toggles line numbers and list characters (see set listchars)
-	map <F6> :set number! list!<CR>
+	map <F6> :set number! list! <bar> :NERDTreeToggle <bar> :GitGutterToggle <CR>
 	
 " ==========================================================================================================================
 " ====== FUNCTIONALITY =====================================================================================================
@@ -97,9 +112,9 @@ endif
 	set foldlevelstart=0
 	
 	" A tab will ocupy the size of 4 spaces
-	set tabstop=4
+	set tabstop=2
 	" Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
-	set shiftwidth=4
+	set shiftwidth=2
 	" Round indent to multiple of 'shiftwidth'.  Applies to > and < commands.
 	set shiftround
 	" When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
@@ -116,11 +131,6 @@ endif
 	" List tab (with >-) and end of line (with $) characthers
 	set list
 	set listchars=tab:>-,eol:$
-	
-	" Makes F5 toggle paste mode
-	set pastetoggle=<F5>
-	" Clear paste mode when going back to normal mode
-	autocmd InsertLeave * set nopaste
 	
 	set nowrap
 	
@@ -155,12 +165,20 @@ endif
 	" More intuitive selecting in visual mode
 	set selection=exclusive
 	
-	" Easy access to NERDTree
-	if(!exists('vimrc_already_sourced'))
-	    command Nt NERDTree
-	    command Nc NERDTreeClose
-	endif
+	"NERDTree configuration
+	silent! nmap <C-p> :NERDTreeToggle<CR>
+	silent! map <F2> :NERDTreeTabsToggle<CR>
+	silent! map <F3> :NERDTreeFind<CR>
+	let g:NERDTreeToggle="<F2>"
+	let g:NERDTreeMapActivateNode="<F3>"
+	let g:NERDTreeMapPreview="<F4>"
+	let g:NERDTreeDirArrows = 1
+	let g:NERDTreeDirArrowExpandable = '▸'
+	let g:NERDTreeDirArrowCollapsible = '▾'
+	let g:NERDTreeGlyphReadOnly = 'RO'
 	
+	let g:nerdtree_tabs_open_on_console_startup=1
+
 	" Fix annoying surround.vim message
 	vmap s S
 	
@@ -173,6 +191,13 @@ endif
 	"the screen for redrawing, instead of using insert/delete line commands.
 	set ttyfast
 	
+	" Quickly jump to opening brace and back to avoid mistakes
+	set showmatch
+	set matchtime=1
+	
+	"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+	"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+	"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 " ==========================================================================================================================
 " ====== VISUAL ============================================================================================================
 " ==========================================================================================================================
@@ -182,9 +207,6 @@ endif
 	
 	" Spell checking
 	" setglobal spell spelllang=en_gb
-	
-	" Does not highlight the screen line. Makes vim fast when the opened file has long lines
-	set nocursorline
 	
 	" Highlight search terms
 	set hlsearch
@@ -216,11 +238,6 @@ endif
 	" rid of the annoying @@@@@ crap)
 	set display+=lastline
 	
-	" Make the default window size bigger
-	if has("gui_running") && !exists('vimrc_already_sourced')
-		set lines=32 columns=120
-	endif
-	
 	" No annoying flashes
 	set novb
 	
@@ -233,31 +250,15 @@ endif
 	" Hides all scroll bars
 	set guioptions-=r,l,L
 	
-	" Make visual selection copy to the middle click buffer.
-	" If enabled on Windows, this will make selection copy to the Windows
-	" clipboard, which can be a pain if you need to select something and
-	" delete it before pasting.
-	if has("unix")
-		set guioptions+=a
-	endif
-	" When in gui mode, don't open an entire messagebox to ask a question
-	set guioptions+=c
-	
-	" Quickly jump to opening brace and back to avoid mistakes
-	set showmatch
-	set matchtime=1
-	
 	" Show line numbers
 	set nu
-	
-	" $ for change command instead of deleting word then insert
-	" set cpoptions+=$
+	nnoremap <F7> :set relativenumber!<cr>
 	
 	" Don't show the intro message when starting Vim
 	set shortmess+=I
 	
-	" Don't update the display while executing macros
-	" set lazyredraw
+	" Ensure the display is updated while executing macros
+	set nolazyredraw
 	
 	" When the page starts to scroll, keep the cursor 4 lines from the top and 8
 	" lines from the bottom
@@ -265,9 +266,3 @@ endif
 	
 	" Show the command as it's being typed in the lower right
 	set showcmd
-	
-	" Keep more context when editing PHP files so Vim doesn't try to highlight
-	" PHP as HTML and vice-versa.
-	" let php_minlines=500
-	
-	let vimrc_already_sourced = 1
