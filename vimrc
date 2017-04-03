@@ -1,6 +1,4 @@
-if $USER == "root"
-	let &runtimepath = substitute(&runtimepath, "/root/.vim", "/home/simon/.vim", "g")
-endif
+let &runtimepath = substitute(&runtimepath, "/root/.vim", "/home/simon/.vim", "g")
 
 " ==========================================================================================================================
 " ====== PLUGINS ===========================================================================================================
@@ -27,8 +25,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 
 " Autocomplete
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Shougo/neocomplete.vim'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Shougo/neocomplete.vim'
 
 " Languages
 Plugin 'derekwyatt/vim-scala'
@@ -111,16 +109,23 @@ let g:rainbow_active = 1
 	" Starts editing with all folds closed
 	set foldlevelstart=0
 	
-	" A tab will ocupy the size of 4 spaces
+	" A tab will ocupy the size of 2 spaces
 	set tabstop=2
 	" Number of spaces to use for each step of (auto)indent.  Used for |'cindent'|, |>>|, |<<|, etc.
 	set shiftwidth=2
+	" Number of spaces that a <Tab> counts for while performing editing
+	" operations, like inserting a <Tab> or using <Backspace>.
+	set softtabstop=2
 	" Round indent to multiple of 'shiftwidth'.  Applies to > and < commands.
 	set shiftround
 	" When on, a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
 	" 'tabstop' or 'softtabstop' is used in other places.  A <BS> will delete
 	" a 'shiftwidth' worth of space at the start of the line.
 	set smarttab
+	
+	" Substitutes tabs for spaces, but handles shiftwidth worth of spaces as a tab
+	" autocmd FileType ruby,scala set expandtab
+	set expandtab
 	
 	" Do smart autoindenting when starting a new line.
 	set smartindent
