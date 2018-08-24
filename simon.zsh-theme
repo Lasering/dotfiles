@@ -13,7 +13,7 @@ PROMPT='$fg_green%n%B$fg_white@$fg_green%m$fg_white·$fg_blue%1/$fg_reset$(git_p
 
 ZSH_THEME_GIT_PROMPT_PREFIX="·$fg_red"
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
-ZSH_THEME_GIT_PROMPT_DIRTY=""
+ZSH_THEME_GIT_PROMPT_DIRTY=" ❌"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 
 

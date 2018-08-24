@@ -30,6 +30,7 @@ Plugin 'bling/vim-airline'
 
 " Languages
 Plugin 'derekwyatt/vim-scala'
+Plugin 'vim-scripts/ebnf.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -135,7 +136,8 @@ let g:rainbow_active = 1
 	
 	" List tab (with >-) and end of line (with $) characthers
 	set list
-	set listchars=tab:>-,eol:$
+	"set listchars=tab:>-,eol:$
+	set listchars=tab:>-,eol:¶
 	
 	set nowrap
 	
